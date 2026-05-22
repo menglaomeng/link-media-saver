@@ -1,19 +1,17 @@
 :root {
-  --paper: #f6f7fb;
+  --paper: oklch(0.977 0.006 258);
   --page-gradient:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.86) 0%, rgba(255, 255, 255, 0.5) 42%, rgba(255, 255, 255, 0.72) 100%),
-    radial-gradient(circle at 18% 20%, rgba(10, 132, 255, 0.095), transparent 32%),
-    radial-gradient(circle at 82% 76%, rgba(255, 149, 0, 0.075), transparent 30%),
-    linear-gradient(145deg, #f1f6ff 0%, #f8f7fb 48%, #fff8f5 100%);
-  --surface: #fbfbfd;
-  --surface-soft: #ffffff;
-  --ink: #1c1c1e;
-  --muted: #8e8e93;
-  --line: rgba(60, 60, 67, 0.16);
-  --line-strong: rgba(60, 60, 67, 0.24);
-  --accent: #0a84ff;
-  --danger: #d70015;
-  --warning: #8a5a00;
+    linear-gradient(180deg, rgba(255, 255, 255, 0.72) 0%, rgba(255, 255, 255, 0.32) 46%, rgba(255, 250, 246, 0.64) 100%),
+    linear-gradient(145deg, oklch(0.958 0.022 252) 0%, oklch(0.976 0.006 265) 52%, oklch(0.972 0.024 55) 100%);
+  --surface: oklch(0.992 0.003 258);
+  --surface-soft: oklch(0.998 0.002 258);
+  --ink: oklch(0.225 0.012 258);
+  --muted: oklch(0.585 0.018 258);
+  --line: color-mix(in oklch, var(--ink) 12%, transparent);
+  --line-strong: color-mix(in oklch, var(--ink) 18%, transparent);
+  --accent: oklch(0.62 0.19 252);
+  --danger: oklch(0.52 0.22 25);
+  --warning: oklch(0.46 0.105 70);
   color: var(--ink);
   background: var(--paper);
   font-family:
@@ -32,9 +30,11 @@
 body {
   min-width: 320px;
   min-height: 100vh;
+  min-height: 100dvh;
   margin: 0;
   background: var(--page-gradient);
   background-attachment: fixed;
+  overflow-x: hidden;
 }
 
 button,
@@ -55,7 +55,8 @@ a {
   overflow: hidden;
   isolation: isolate;
   min-height: 100vh;
-  padding: clamp(18px, 4vw, 32px) 16px;
+  min-height: 100dvh;
+  padding: clamp(24px, 5vh, 44px) 18px;
   background: var(--page-gradient);
   background-attachment: fixed;
 }
@@ -66,27 +67,26 @@ a {
   z-index: -2;
   content: "";
   background:
-    linear-gradient(rgba(255, 255, 255, 0.34) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.3) 1px, transparent 1px);
-  background-size: 42px 42px;
-  mask-image: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.26) 24%, rgba(0, 0, 0, 0.16) 74%, transparent);
+    linear-gradient(90deg, color-mix(in oklch, var(--ink) 4%, transparent) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.46), transparent 38%, rgba(255, 247, 239, 0.52));
+  background-size: 58px 100%, auto;
+  mask-image: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.22) 22%, rgba(0, 0, 0, 0.18) 78%, transparent);
 }
 
 .shell::after {
   position: absolute;
-  top: 13vh;
+  top: calc(50% - 116px);
   left: 50%;
   z-index: -1;
-  width: min(520px, 82vw);
-  height: 260px;
+  width: min(520px, 78vw);
+  height: 1px;
   content: "";
-  border: 1px solid rgba(255, 255, 255, 0.58);
-  border-radius: 34px;
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.42), rgba(255, 255, 255, 0.08)),
-    linear-gradient(90deg, rgba(10, 132, 255, 0.08), rgba(255, 149, 0, 0.055));
-  box-shadow: 0 34px 90px rgba(31, 41, 55, 0.08);
-  transform: translateX(-50%) rotate(-3deg);
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, color-mix(in oklch, var(--accent) 22%, transparent), rgba(255, 149, 0, 0.16), transparent);
+  box-shadow:
+    0 34px 110px rgba(10, 132, 255, 0.13),
+    0 72px 120px rgba(255, 149, 0, 0.12);
+  transform: translateX(-50%);
   transform-origin: center;
 }
 
@@ -94,65 +94,65 @@ a {
   display: grid;
   gap: 0;
   justify-items: center;
-  width: min(392px, 100%);
+  width: min(416px, 100%);
   margin: 0 auto;
 }
 
 .download-card {
   position: relative;
   display: grid;
-  gap: 10px;
+  gap: 12px;
   width: 100%;
-  padding: 15px;
-  border: 1px solid rgba(255, 255, 255, 0.72);
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.78);
+  padding: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.82);
+  border-radius: 10px;
+  background: color-mix(in oklch, var(--surface-soft) 90%, transparent);
   box-shadow:
-    0 18px 54px rgba(31, 41, 55, 0.11),
-    inset 0 1px 0 rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(22px);
+    0 20px 54px rgba(30, 41, 59, 0.105),
+    inset 0 1px 0 rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(18px);
 }
 
 .download-card.active {
-  gap: 9px;
+  gap: 12px;
 }
 
 .card-copy {
   display: grid;
-  gap: 3px;
-  padding: 0 1px 1px;
+  gap: 4px;
+  padding: 0 1px;
 }
 
 .card-copy h1 {
   margin: 0;
   color: var(--ink);
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 760;
-  line-height: 1.3;
+  line-height: 1.25;
 }
 
 .card-copy p {
   margin: 0;
-  color: color-mix(in srgb, var(--muted) 92%, var(--ink));
-  font-size: 11px;
+  color: color-mix(in oklch, var(--muted) 90%, var(--ink));
+  font-size: 12px;
   line-height: 1.45;
 }
 
 .extract-form {
   display: grid;
-  gap: 9px;
+  gap: 10px;
 }
 
 .link-field.van-cell {
   display: flex;
   align-items: center;
-  height: 44px;
-  min-height: 44px;
-  padding: 0 8px 0 13px;
+  height: 43px;
+  min-height: 43px;
+  padding: 0 8px 0 12px;
   border: 1px solid var(--line-strong);
-  border-radius: 9px;
+  border-radius: 8px;
   background: var(--surface-soft);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.86);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.92);
 }
 
 .link-field .van-cell__value,
@@ -189,6 +189,7 @@ a {
   font-size: 13px;
   font-weight: 700;
   cursor: pointer;
+  transition: opacity 140ms ease;
 }
 
 .paste-button:active {
@@ -196,11 +197,11 @@ a {
 }
 
 .link-field .van-field__control::placeholder {
-  color: #a0a0a6;
+  color: color-mix(in oklch, var(--muted) 72%, var(--surface-soft));
 }
 
 .link-field:focus-within {
-  border-color: color-mix(in srgb, var(--accent) 46%, var(--line-strong));
+  border-color: color-mix(in oklch, var(--accent) 46%, var(--line-strong));
 }
 
 .primary-button,
@@ -220,12 +221,12 @@ a {
 
 .primary-button {
   gap: 6px;
-  height: 42px;
-  min-height: 42px;
-  border-radius: 9px;
+  height: 41px;
+  min-height: 41px;
+  border-radius: 8px;
   background: var(--accent);
   border-color: var(--accent);
-  color: white;
+  color: oklch(0.99 0.003 252);
   font-size: 14px;
   font-weight: 700;
   box-shadow: none;
@@ -249,7 +250,7 @@ a {
 .primary-button:focus-visible,
 .download-button:focus-visible,
 .link-field:focus-visible {
-  outline: 2px solid color-mix(in srgb, var(--accent) 46%, transparent);
+  outline: 2px solid color-mix(in oklch, var(--accent) 46%, transparent);
   outline-offset: 2px;
 }
 
@@ -267,9 +268,9 @@ a {
   display: flex;
   gap: 8px;
   align-items: flex-start;
-  padding: 9px 11px;
+  padding: 9px 10px;
   border: 1px solid color-mix(in srgb, currentColor 18%, transparent);
-  border-radius: 10px;
+  border-radius: 8px;
   background: color-mix(in srgb, currentColor 7%, var(--surface-soft));
   font-size: 12px;
   line-height: 1.45;
@@ -285,8 +286,11 @@ a {
 
 .download-progress {
   display: grid;
-  gap: 7px;
-  padding: 2px 1px 0;
+  gap: 8px;
+  padding: 9px 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: color-mix(in oklch, var(--surface-soft) 76%, transparent);
 }
 
 .progress-head {
@@ -305,10 +309,10 @@ a {
 }
 
 .progress-track {
-  height: 4px;
+  height: 3px;
   overflow: hidden;
   border-radius: 999px;
-  background: rgba(60, 60, 67, 0.12);
+  background: color-mix(in oklch, var(--ink) 10%, transparent);
 }
 
 .progress-bar {
@@ -325,7 +329,7 @@ a {
   overflow: hidden;
   color: var(--muted);
   font-size: 11px;
-  line-height: 1.35;
+  line-height: 1.4;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -404,6 +408,7 @@ a {
 
 .single-media .preview {
   max-height: calc(100vh - 250px);
+  max-height: calc(100dvh - 250px);
   aspect-ratio: 4 / 5;
 }
 
@@ -502,22 +507,34 @@ a {
 
 @media (max-width: 760px) {
   .shell {
-    padding: 18px 16px;
+    padding: clamp(20px, 4vh, 34px) 18px;
   }
 
   .workspace {
-    width: min(390px, 100%);
+    width: min(408px, 100%);
   }
 
   .download-card {
-    padding: 15px;
-    border-radius: 12px;
+    padding: 16px;
+    border-radius: 10px;
   }
 
   .actions {
     opacity: 1;
     transform: none;
     pointer-events: auto;
+  }
+}
+
+@supports (height: 100dvh) {
+  .shell {
+    padding-block: clamp(20px, 5dvh, 44px);
+  }
+
+  @media (max-width: 760px) {
+    .shell {
+      padding-block: clamp(20px, 4dvh, 34px);
+    }
   }
 }
 
