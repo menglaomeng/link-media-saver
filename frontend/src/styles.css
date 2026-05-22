@@ -1,21 +1,22 @@
 :root {
-  --paper: oklch(0.972 0.014 232);
+  --paper: oklch(0.984 0.006 246);
   --page-gradient:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.72) 0%, rgba(247, 252, 255, 0.42) 46%, rgba(244, 250, 248, 0.72) 100%),
-    linear-gradient(128deg, transparent 0 15%, rgba(90, 171, 255, 0.14) 15% 26%, transparent 26% 100%),
-    linear-gradient(42deg, transparent 0 55%, rgba(129, 190, 169, 0.12) 55% 68%, transparent 68% 100%),
-    linear-gradient(154deg, oklch(0.936 0.035 238) 0%, oklch(0.985 0.006 250) 48%, oklch(0.955 0.031 152) 100%);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.76) 0%, rgba(249, 252, 255, 0.5) 48%, rgba(255, 250, 246, 0.72) 100%),
+    linear-gradient(118deg, transparent 0 13%, rgba(24, 143, 255, 0.16) 13% 29%, transparent 29% 100%),
+    linear-gradient(38deg, transparent 0 54%, rgba(255, 110, 158, 0.12) 54% 68%, transparent 68% 100%),
+    linear-gradient(151deg, transparent 0 68%, rgba(255, 207, 92, 0.1) 68% 78%, transparent 78% 100%),
+    linear-gradient(154deg, oklch(0.946 0.026 243) 0%, oklch(0.99 0.004 250) 48%, oklch(0.972 0.018 58) 100%);
   --surface: oklch(0.992 0.003 258);
   --surface-soft: oklch(0.998 0.002 258);
-  --glass-fill: rgba(255, 255, 255, 0.46);
-  --glass-fill-strong: rgba(255, 255, 255, 0.68);
-  --glass-edge: rgba(255, 255, 255, 0.78);
-  --glass-shadow: rgba(31, 45, 61, 0.16);
+  --glass-fill: rgba(255, 255, 255, 0.52);
+  --glass-fill-strong: rgba(255, 255, 255, 0.76);
+  --glass-edge: rgba(255, 255, 255, 0.84);
+  --glass-shadow: rgba(32, 43, 60, 0.14);
   --ink: oklch(0.225 0.012 258);
   --muted: oklch(0.585 0.018 258);
   --line: color-mix(in oklch, var(--ink) 12%, transparent);
   --line-strong: color-mix(in oklch, var(--ink) 18%, transparent);
-  --accent: oklch(0.62 0.19 252);
+  --accent: oklch(0.61 0.235 258);
   --danger: oklch(0.52 0.22 25);
   --warning: oklch(0.46 0.105 70);
   color: var(--ink);
@@ -74,12 +75,12 @@ a {
   z-index: -2;
   content: "";
   background:
-    linear-gradient(90deg, color-mix(in oklch, var(--ink) 3%, transparent) 1px, transparent 1px),
-    linear-gradient(180deg, color-mix(in oklch, var(--ink) 2%, transparent) 1px, transparent 1px),
-    repeating-linear-gradient(132deg, transparent 0 14px, rgba(255, 255, 255, 0.22) 14px 15px),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.62), transparent 44%, rgba(239, 249, 247, 0.62));
+    linear-gradient(90deg, color-mix(in oklch, var(--ink) 2.6%, transparent) 1px, transparent 1px),
+    linear-gradient(180deg, color-mix(in oklch, var(--ink) 1.8%, transparent) 1px, transparent 1px),
+    repeating-linear-gradient(132deg, transparent 0 16px, rgba(255, 255, 255, 0.2) 16px 17px),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.68), transparent 44%, rgba(255, 248, 242, 0.62));
   background-size: 64px 100%, 100% 64px, 28px 28px, auto;
-  opacity: 0.78;
+  opacity: 0.72;
   mask-image: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.34) 16%, rgba(0, 0, 0, 0.24) 84%, transparent);
 }
 
@@ -93,15 +94,15 @@ a {
   content: "";
   border: 1px solid rgba(255, 255, 255, 0.3);
   background:
-    linear-gradient(104deg, rgba(255, 255, 255, 0.38), rgba(255, 255, 255, 0.08) 56%, rgba(255, 255, 255, 0.28)),
-    linear-gradient(90deg, transparent, rgba(90, 171, 255, 0.14), rgba(129, 190, 169, 0.12), transparent);
+    linear-gradient(104deg, rgba(255, 255, 255, 0.44), rgba(255, 255, 255, 0.1) 56%, rgba(255, 255, 255, 0.34)),
+    linear-gradient(90deg, transparent, rgba(24, 143, 255, 0.18), rgba(255, 110, 158, 0.12), rgba(255, 207, 92, 0.09), transparent);
   backdrop-filter: blur(10px) saturate(1.25);
   -webkit-backdrop-filter: blur(10px) saturate(1.25);
   clip-path: polygon(8% 28%, 96% 0, 88% 62%, 0 100%);
   box-shadow:
-    0 44px 130px rgba(70, 139, 190, 0.14),
-    0 82px 140px rgba(92, 153, 134, 0.11);
-  opacity: 0.82;
+    0 44px 130px rgba(24, 143, 255, 0.14),
+    0 82px 140px rgba(255, 110, 158, 0.09);
+  opacity: 0.76;
   transform: translateX(-50%) rotate(-2deg);
   transform-origin: center;
 }
@@ -109,7 +110,7 @@ a {
 .workspace {
   position: relative;
   display: grid;
-  gap: 34px;
+  gap: 26px;
   justify-items: stretch;
   width: min(596px, 100%);
   margin: 0 auto;
@@ -117,23 +118,23 @@ a {
 
 .hero-copy {
   display: grid;
-  gap: 10px;
+  gap: 7px;
   padding: 0 2px;
 }
 
 .hero-copy h1 {
   margin: 0;
   color: var(--ink);
-  font-size: clamp(30px, 5.2vw, 38px);
-  font-weight: 820;
+  font-size: clamp(24px, 4vw, 30px);
+  font-weight: 760;
   letter-spacing: 0;
-  line-height: 1.08;
+  line-height: 1.16;
 }
 
 .hero-copy p {
   margin: 0;
   color: color-mix(in oklch, var(--muted) 90%, var(--ink));
-  font-size: clamp(17px, 3vw, 22px);
+  font-size: clamp(14px, 2.2vw, 17px);
   font-weight: 520;
   line-height: 1.35;
 }
@@ -148,12 +149,12 @@ a {
   border: 1px solid var(--glass-edge);
   border-radius: 22px;
   background:
-    linear-gradient(138deg, rgba(255, 255, 255, 0.78), rgba(255, 255, 255, 0.34) 44%, rgba(255, 255, 255, 0.58)),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.1)),
-    linear-gradient(135deg, rgba(90, 171, 255, 0.07), transparent 42%, rgba(129, 190, 169, 0.07));
+    linear-gradient(138deg, rgba(255, 255, 255, 0.84), rgba(255, 255, 255, 0.38) 44%, rgba(255, 255, 255, 0.64)),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.32), rgba(255, 255, 255, 0.12)),
+    linear-gradient(135deg, rgba(24, 143, 255, 0.07), transparent 42%, rgba(255, 110, 158, 0.055));
   box-shadow:
-    0 26px 74px var(--glass-shadow),
-    0 10px 30px rgba(82, 141, 165, 0.1),
+    0 16px 42px rgba(32, 43, 60, 0.1),
+    0 5px 16px rgba(68, 126, 177, 0.06),
     inset 0 1px 0 rgba(255, 255, 255, 0.92),
     inset 0 -1px 0 rgba(255, 255, 255, 0.34);
   backdrop-filter: blur(30px) saturate(1.55);
@@ -168,9 +169,10 @@ a {
   content: "";
   border-radius: 21px 21px 40px 40px;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.2) 62%, transparent),
-    linear-gradient(112deg, transparent 0 32%, rgba(255, 255, 255, 0.34) 32% 40%, transparent 40% 100%);
-  opacity: 0.62;
+    linear-gradient(180deg, rgba(255, 255, 255, 0.78), rgba(255, 255, 255, 0.24) 62%, transparent),
+    linear-gradient(112deg, transparent 0 28%, rgba(255, 255, 255, 0.44) 28% 37%, transparent 37% 100%),
+    linear-gradient(90deg, rgba(24, 143, 255, 0.08), transparent 48%, rgba(255, 110, 158, 0.06));
+  opacity: 0.7;
   pointer-events: none;
 }
 
@@ -305,10 +307,10 @@ a {
 }
 
 .link-field:focus-within {
-  border-color: rgba(255, 255, 255, 0.92);
+  border-color: rgba(255, 255, 255, 0.82);
   box-shadow:
-    0 0 0 3px rgba(90, 171, 255, 0.14),
-    0 12px 26px rgba(82, 141, 165, 0.09),
+    0 0 0 1px rgba(24, 143, 255, 0.12),
+    0 8px 18px rgba(68, 126, 177, 0.06),
     inset 0 1px 0 rgba(255, 255, 255, 0.86);
 }
 
@@ -333,18 +335,19 @@ a {
   min-height: 82px;
   border-radius: 16px;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.42), rgba(255, 255, 255, 0.08)),
-    linear-gradient(135deg, rgba(37, 132, 255, 0.82), rgba(41, 168, 131, 0.76));
-  border: 1px solid rgba(255, 255, 255, 0.48);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.48), rgba(255, 255, 255, 0.1)),
+    linear-gradient(180deg, rgba(10, 132, 255, 0.98), rgba(0, 101, 229, 0.96));
+  border: 1px solid rgba(255, 255, 255, 0.56);
   color: oklch(0.99 0.003 252);
   font-size: 24px;
   font-weight: 700;
   box-shadow:
-    0 18px 34px rgba(47, 128, 184, 0.22),
-    inset 0 1px 0 rgba(255, 255, 255, 0.48),
-    inset 0 -1px 0 rgba(31, 78, 120, 0.18);
-  backdrop-filter: blur(16px) saturate(1.35);
-  -webkit-backdrop-filter: blur(16px) saturate(1.35);
+    0 18px 36px rgba(10, 132, 255, 0.26),
+    0 4px 12px rgba(0, 79, 184, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -1px 0 rgba(0, 65, 160, 0.22);
+  backdrop-filter: blur(18px) saturate(1.5);
+  -webkit-backdrop-filter: blur(18px) saturate(1.5);
 }
 
 .form-note {
