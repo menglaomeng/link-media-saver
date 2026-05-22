@@ -4,7 +4,7 @@ import { apiBase, attachmentUrl } from '@/utils/mediaUrl'
 
 type DownloadPhase = 'idle' | 'resolving' | 'downloading' | 'done'
 
-const NATIVE_DOWNLOAD_DELAY = 600
+const BROWSER_DOWNLOAD_DELAY = 600
 
 export function useMediaExtractor() {
   const linkText = ref('')
@@ -16,10 +16,7 @@ export function useMediaExtractor() {
   const currentIndex = ref(0)
   const totalCount = ref(0)
   const currentFilename = ref('')
-  const loadedBytes = ref(0)
-  const totalBytes = ref(0)
-  const nativeDownloadCount = ref(0)
-  const currentUsesNativeDownload = ref(false)
+  const browserDownloadCount = ref(0)
 
   const canSubmit = computed(() => linkText.value.trim().length > 0 && !loading.value)
   const hasResult = computed(() => phase.value !== 'idle')
@@ -30,22 +27,17 @@ export function useMediaExtractor() {
   })
   const progressPercent = computed(() => {
     if (phase.value === 'done') return 100
-    if (!totalBytes.value) return 0
-    return Math.min(99, Math.round((loadedBytes.value / totalBytes.value) * 100))
+    if (phase.value !== 'downloading' || !totalCount.value) return 0
+    return Math.min(99, Math.round((currentIndex.value / totalCount.value) * 100))
   })
   const progressText = computed(() => {
     if (phase.value === 'resolving') return '解析链接中'
     if (phase.value === 'downloading') {
       const indexText = totalCount.value > 1 ? `${currentIndex.value}/${totalCount.value} · ` : ''
-      if (currentUsesNativeDownload.value) return `${indexText}交给浏览器下载`
-      const percentText = totalBytes.value ? `${progressPercent.value}%` : '下载中'
-      return `${indexText}${percentText}`
+      return `${indexText}交给浏览器下载`
     }
     if (phase.value === 'done') {
-      if (nativeDownloadCount.value) {
-        return totalCount.value > 1 ? `已触发 ${totalCount.value} 个文件` : '已开始下载'
-      }
-      return totalCount.value > 1 ? `已完成 ${totalCount.value} 个文件` : '下载完成'
+      return browserDownloadCount.value > 1 ? `已触发 ${browserDownloadCount.value} 个文件` : '已开始下载'
     }
     return ''
   })
@@ -73,30 +65,12 @@ export function useMediaExtractor() {
     currentIndex.value = index
     totalCount.value = total
     currentFilename.value = item.filename
-    loadedBytes.value = 0
-    totalBytes.value = item.size || 0
-    currentUsesNativeDownload.value = isVideoItem(item)
     phase.value = 'downloading'
 
     try {
-      if (currentUsesNativeDownload.value) {
-        triggerNativeDownload(item)
-        nativeDownloadCount.value += 1
-        await wait(NATIVE_DOWNLOAD_DELAY)
-        return
-      }
-
-      const response = await fetch(attachmentUrl(item))
-      if (!response.ok) throw new Error('下载失败')
-
-      const length = Number(response.headers.get('content-length') || 0)
-      if (length > 0) totalBytes.value = length
-
-      const blob = response.body
-        ? await readResponseBlob(response)
-        : await response.blob()
-
-      saveBlob(blob, item.filename)
+      triggerBrowserDownload(item)
+      browserDownloadCount.value += 1
+      await wait(BROWSER_DOWNLOAD_DELAY)
     } finally {
       downloadingUrl.value = ''
     }
@@ -112,10 +86,7 @@ export function useMediaExtractor() {
     currentIndex.value = 0
     totalCount.value = 0
     currentFilename.value = ''
-    loadedBytes.value = 0
-    totalBytes.value = 0
-    nativeDownloadCount.value = 0
-    currentUsesNativeDownload.value = false
+    browserDownloadCount.value = 0
 
     const controller = new AbortController()
     const timeoutId = window.setTimeout(() => controller.abort(), 90_000)
@@ -154,38 +125,7 @@ export function useMediaExtractor() {
     }
   }
 
-  async function readResponseBlob(response: Response) {
-    const reader = response.body?.getReader()
-    if (!reader) return response.blob()
-
-    const chunks: BlobPart[] = []
-    while (true) {
-      const { done, value } = await reader.read()
-      if (done) break
-      if (value) {
-        const chunk = new Uint8Array(value.byteLength)
-        chunk.set(value)
-        chunks.push(chunk.buffer as ArrayBuffer)
-        loadedBytes.value += value.byteLength
-      }
-    }
-    return new Blob(chunks, {
-      type: response.headers.get('content-type') || 'application/octet-stream'
-    })
-  }
-
-  function saveBlob(blob: Blob, filename: string) {
-    const url = URL.createObjectURL(blob)
-    const link = document.createElement('a')
-    link.href = url
-    link.download = filename
-    document.body.appendChild(link)
-    link.click()
-    link.remove()
-    window.setTimeout(() => URL.revokeObjectURL(url), 1200)
-  }
-
-  function triggerNativeDownload(item: MediaItem) {
+  function triggerBrowserDownload(item: MediaItem) {
     const link = document.createElement('a')
     link.href = attachmentUrl(item)
     link.download = item.filename
@@ -193,19 +133,6 @@ export function useMediaExtractor() {
     document.body.appendChild(link)
     link.click()
     link.remove()
-  }
-
-  function isVideoItem(item: MediaItem) {
-    const value = `${item.kind} ${item.mime_type} ${item.filename} ${item.download_url}`.toLowerCase()
-    return (
-      item.kind === 'video' ||
-      item.mime_type.startsWith('video/') ||
-      /\.(mp4|mov|m4v|webm|mkv)(?:$|\?)/i.test(item.filename) ||
-      value.includes('/aweme/v1/play') ||
-      value.includes('mime_type=video') ||
-      value.includes('sns-video') ||
-      value.includes('video.twimg.com')
-    )
   }
 
   function wait(duration: number) {
