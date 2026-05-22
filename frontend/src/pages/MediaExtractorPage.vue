@@ -25,12 +25,12 @@ const {
 <template>
   <main class="shell">
     <section class="workspace">
-      <div class="download-card" :class="{ active: hasResult }">
-        <header class="card-copy">
-          <h1>链接素材下载</h1>
-          <p>支持主流平台作品链接，解析后按顺序保存</p>
-        </header>
+      <header class="hero-copy">
+        <h1>粘贴链接，直接下载</h1>
+        <p>不展示预览，解析完成后保存到本地。</p>
+      </header>
 
+      <div class="download-card" :class="{ active: hasResult }">
         <ExtractForm
           v-model="linkText"
           :can-submit="canSubmit"

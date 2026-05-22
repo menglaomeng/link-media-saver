@@ -14,20 +14,23 @@ const emit = defineEmits<{
 
 <template>
   <form class="extract-form" @submit.prevent="emit('submit')">
+    <div class="form-head">
+      <span>分享链接</span>
+      <button class="paste-button" type="button" @click="emit('paste')">
+        粘贴
+      </button>
+    </div>
+
     <van-field
       :model-value="modelValue"
       class="link-field"
-      placeholder="粘贴作品链接"
+      type="textarea"
+      placeholder="https://example.com/share/..."
+      :rows="3"
       :border="false"
       aria-label="分享链接"
       @update:model-value="emit('update:modelValue', String($event))"
-    >
-      <template #button>
-        <button class="paste-button" type="button" @click="emit('paste')">
-          粘贴
-        </button>
-      </template>
-    </van-field>
+    />
 
     <van-button
       class="primary-button"
@@ -39,7 +42,9 @@ const emit = defineEmits<{
       :disabled="!canSubmit"
       aria-label="提取"
     >
-      下载
+      提取并下载
     </van-button>
+
+    <p class="form-note">支持抖音、小红书、得物、X 等公开作品链接。</p>
   </form>
 </template>
