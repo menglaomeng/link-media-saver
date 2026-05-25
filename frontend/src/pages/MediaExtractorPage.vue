@@ -15,7 +15,6 @@ const {
   hasResult,
   linkText,
   loading,
-  pasteFromClipboard,
   progressDetail,
   progressPercent,
   progressText
@@ -25,9 +24,16 @@ const {
 <template>
   <main class="shell">
     <section class="workspace">
+      <div class="brand-row" aria-label="LinkDown">
+        <span class="brand-mark" aria-hidden="true">
+          <span></span>
+        </span>
+        <span class="brand-word">LinkDown</span>
+      </div>
+
       <header class="hero-copy">
-        <h1>粘贴链接，直接下载</h1>
-        <p>不展示预览，解析完成后保存到本地。</p>
+        <h1>粘贴链接即可下载</h1>
+        <p>视频和图片，直接保存。</p>
       </header>
 
       <div class="download-card" :class="{ active: hasResult }">
@@ -35,7 +41,6 @@ const {
           v-model="linkText"
           :can-submit="canSubmit"
           :loading="loading"
-          @paste="pasteFromClipboard"
           @submit="extractMedia"
         />
 
@@ -51,6 +56,8 @@ const {
           :visible="hasResult"
         />
       </div>
+
+      <p class="fine-print">公开链接可用</p>
     </section>
   </main>
 </template>
